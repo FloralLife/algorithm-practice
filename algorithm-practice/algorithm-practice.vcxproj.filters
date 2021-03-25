@@ -270,5 +270,8 @@
     <ClCompile Include="[20056] 마법사 상어와 파이어볼.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="[15500] 이상한 하노이 탑.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
