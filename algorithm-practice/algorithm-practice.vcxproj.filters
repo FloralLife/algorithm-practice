@@ -276,5 +276,14 @@
     <ClCompile Include="[17135] 캐슬 디펜스.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="[2206] 벽 부수고 이동하기.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="[4991] 로봇 청소기.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="[17779] 게리맨더링 2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
