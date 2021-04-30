@@ -51,7 +51,7 @@ int count(int archers[3]) {
 	for (int i = 0; i < N; i++)
 		for (int j = 0; j < M; j++)
 			board[i][j] = map[i][j];
-	while (1)
+	while (1) 
 	{
 		vector<pair<int, int>> target;
 		for (int i = 0; i < 3; i++) {

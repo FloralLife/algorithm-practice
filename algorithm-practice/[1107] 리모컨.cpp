@@ -1,49 +1,89 @@
 #include <iostream>
+#include <bitset>
 #include <math.h>
-#include <algorithm>
 using namespace std;
 
-bool broken[10];
-int answer, mindif = 500000, digit, N;
+int N, answer, digit;
+bitset<10> broken;
 
-
-int getDigit(int n) {
-	int i;
-	for (i = 0; n > 0; i++) {
+int digitNo(int n) {
+	int d = 0;
+	if (n == 0) return 1;
+	while (n) {
+		d++;
 		n /= 10;
 	}
-	return i;
+	return d;
 }
 
-void find(int n, int chanel) {
-	if (n >= digit - 1 && n <= digit + 1 && n != 0) {
-		int dif = abs(N - chanel);
-		if (dif < mindif) {
-			answer = chanel;
-			mindif = dif;
+void maxmin()
+{
+	int digit_min, digit_max;
+	int maxnum, minnum;
+	if (digit > 1) {
+		for (digit_min = 9; digit_min >= 0; digit_min--) {
+			if (!broken[digit_min]) break;
 		}
+		minnum = 0;
+		for (int i = 0; i < digit - 1; i++) {
+			minnum *= 10;
+			minnum += digit_min;
+		}
+		minnum = abs(N - minnum) + digit - 1;
+		answer = minnum < answer ? minnum : answer;
 	}
-	for (int i = 0; i < 10; i++) {
-		if (broken[i]) continue;
-		int num = i * pow(10, n);
-		if (n <= digit) {
-			chanel += num;
-			find(n + 1, chanel);
-			chanel -= num;
+	if (digit < 6) {
+		for (digit_max = 0; digit_max <= 9; digit_max++) {
+			if (!broken[digit_max]) break;
+		}
+		maxnum = 0;
+		for (int i = 0; i < digit + 1; i++) {
+			if (digit_max == 0) {
+				for (int j = 1; j < 10; j++) {
+					if (!broken[j]) {
+						maxnum = j * pow(10, digit);
+						break;
+					}
+				}
+				break;
+			}
+			maxnum *= 10;
+			maxnum += digit_max;
+		}
+		maxnum = abs(N - maxnum) + digit + 1;
+		answer = maxnum < answer ? maxnum : answer;
+	}
+}
+
+void find(int n, int ch) {
+	if (n == digit) {
+		int cnt = abs(N - ch) + digitNo(ch);
+		answer = cnt < answer ? cnt : answer;
+	}
+	else {
+		ch *= 10;
+		for (int i = 0; i < 10; i++) {
+			if (broken[i]) continue;
+			find(n + 1, ch + i);
 		}
 	}
 }
 
 int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	cin >> N;
 	int M;
-	cin >> N >> M;
+	cin >> M;
 	for (int i = 0; i < M; i++) {
-		int num;
-		cin >> num;
-		broken[num] = true;
+		int b;
+		cin >> b;
+		broken.set(b);
 	}
-	digit = getDigit(N);
+	answer = abs(N - 100);
+	digit = digitNo(N);
+	maxmin();
 	find(0, 0);
-	answer = min(getDigit(answer) + mindif, abs(100 - N));
-	cout << answer << endl;
+	cout << answer;
 }
